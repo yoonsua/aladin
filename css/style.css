@@ -1,0 +1,352 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* header */
+header {
+  width: 100%;
+  height: 55px;
+  padding: 5px 10PX;
+}
+header a {
+  float: left;
+  display: inline-block;
+  width: 75px;
+  height: 45px;
+  margin-right: 10px;
+}
+#logo {
+  width: 75px;
+  height: 45px;
+}
+#search_box {
+  float: left;
+  width: calc(100% - 10px - 75px);
+  height: 35px;
+  margin: 5px 0;
+  padding: 5px 15px;
+  border-radius: 20px;
+  background-color: #e6e6e6;
+}
+#search_box input {
+  float: left;
+  width: calc(100% - 25px);
+  height: 100%;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+  background-color: #e6e6e6;
+}
+#search_box button {
+  float: left;
+  width: 25px;
+  height: 25px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+#search_box button #search_icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* index */
+#index {
+  width: 100%;
+}
+#index #popup {
+  position: absolute;
+  top: 75px; left: 20px;
+  z-index: 10;
+  width: 200px;
+  height: 150px;
+  padding: 25px;
+  border-radius: 3px;
+  background-color: #fff;
+}
+#index #popup p {
+  font-size: 14px;
+}
+#index #popup a {
+  color: #1b58a9;
+  font-size: 14px;
+}
+#index #popup button {
+  position: absolute;
+  top: 0; right: 0;
+  width: 25px;
+  height: 25px;
+  font-size: 16px;
+  border: 0;
+  border-radius: 0 3px 0 0;
+}
+#index .main {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+}
+#index .main div {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+}
+#index .main div:first-child {
+  left: 0;
+}
+#index .main div img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+}
+#index section {
+  width: 100%;
+  height: 400px;
+}
+#index section .book {
+  width: 100%;
+  height: 200px;
+}
+#index section .book h3 {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 5vw;
+}
+#index section .book ul {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+#index section .book ul li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  list-style: none;
+  width: calc(100%/3);
+  height: 100%;
+}
+#index section .book ul li div {
+  width: 85px;
+  height: 125px;
+  margin: 0 auto;
+}
+#index section .book ul li div img {
+  width: 85px;
+  height: 125px;
+}
+
+/* search */
+#search .result {
+  text-align: center;
+  margin: 5px 0 15px 0;
+  font-size: 13px;
+}
+#search .result b {
+  color: rgb(218, 39, 39);
+}
+#search .list {
+  margin: 0 10px;
+}
+#search .list-item {
+  list-style: none;
+  width: 100%;
+  height: 90px;
+  margin-bottom: 10px;
+}
+#search .list-item > img {
+  float: left;
+  width: 70px;
+  height: 90px;
+}
+#search .content {
+  width: calc(100% - 70px);
+  float: left;
+  height: 90px;
+  padding: 10px;
+}
+#search .content p {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 7.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+}
+#search .content p.author {
+  font-size: 14px;
+}
+
+/* ask */
+#ask .title {
+  font-size: 15px;
+}
+#ask #img {
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+  background-color: #e32e32;
+  margin-top: 20px;
+}
+#ask #content {
+  width: 100%;
+  background-color: #e5e5e5;
+  margin-top: 20px;
+}
+#ask #content p {
+  padding: 10px;
+}
+#ask .book-img {
+  width: 100%;
+  height: 240px;
+  margin: 0 auto;
+}
+#ask .book-main-img {
+  width: 135px;
+  height: 200px;
+  margin: 0 auto;
+}
+#ask .book-main-img img {
+  width: 100%;
+  height: 100%;
+  margin: 20px 0px;
+}
+#ask .book-info {
+  width: 100%;
+  min-height: 70px;
+}
+#ask .book-explain {
+  width: 100%;
+  height: 150px;
+  background-color: #f2f2f2;
+  padding: 0 20px;
+}
+#ask .book-anthor {
+  width: 100%;
+  height: 100px;
+}
+#ask .book-content {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  float: left;
+}
+#ask .book-subcon {
+  width: 40%;
+  font-size: 14px;
+  float: left;
+}
+#ask .book-price, #ask .book-mileage {
+  float: left;
+  width: 60%;
+  height: 50px;
+  font-size: 14px;
+}
+#ask .book-sale {
+  float: left;
+  width: 60%;
+  height: 50px;
+  font-size: 14px;
+  color: #e32e32;
+  font-weight: bold;
+}
+#ask .book-title {
+  min-height: 30px;
+  line-height: 30px;
+  margin: 10px 15px;
+}
+#ask .book-author {
+  font-size: 15px;
+  margin: 10px 15px;
+}
+#ask .book-introduce {
+  width: 100%;
+  min-height: 120px;
+  padding: 20px;
+}
+#ask .book-introduce h4, #ask .book-shop h4 {
+  margin-bottom: 17px;
+}
+#ask .book-introduce p {
+  font-size: 13px;
+  line-height: 20px;
+}
+#ask footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+#ask .book-cart-icon {
+  width: 60px;
+  height: 20px;
+  margin: 0 auto;
+}
+#ask #cart-icon {
+  width: 60px;
+  height: 20px;
+}
+#ask .book-cart {
+  width: 100%;
+  height: 53px;
+  background-color: #dddddd;
+  padding: 8px 10px;
+}
+#ask .btn-cart, #ask .btn-money {
+  width: 49%;
+  height: 38px;
+  float: left;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+#ask .btn-cart {
+  background-color: #28a745;
+}
+#ask .btn-money {
+  float: right;
+  background-color: #17a2b8;
+}
+#ask .book-shop {
+  padding: 20px;
+  margin-bottom: 53px;
+}
+#ask .book-shop a {
+  color: #3774B1;
+  font-size: 13px;
+}
+#ask .book-shop P {
+  margin-bottom: 10px;
+}
+
+/* isBookError */
+#isBookError section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+@media ( min-width: 426px ) {
+  #index section .book ul li {
+    width: calc(100%/4);
+  }
+}
+@media ( min-width: 768px ) {
+  #index section .book ul li {
+    width: calc(100%/5);
+  }
+}
+@media ( min-width: 1024px ) {
+  #index section .book ul li {
+    width: calc(100%/6);
+  }
+}
