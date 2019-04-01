@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="//image.aladin.co.kr/img/home/aladin.ico" type="image/x-icon" rel="shortcut icon">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <title>알라딘</title>
+</head>
+<body>
+  <div id="index">
+    <div id="popup">
+      <p>본 사이트는 cors 확장 프로그램을 설치해야만 이용하실 수 있습니다</p>
+      <br>
+      <a href="https://chrome.google.com/webstore/detail/moesif-orign-cors-changer/digfbfaphojjndkpccljibejjbppifbc?hl=ko">cors 설치하러 가기</a>
+      <button>×</button>
+    </div>
+    <header>
+      <a href="index.html"><img id="logo" src="img/logo.gif"></a>
+      <div id="search_box">
+        <input type="text" placeholder="검색" id="title" autocomplete="off">
+        <button>
+          <img id="search_icon" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png">
+        </button>
+      </div>
+    </header>
+    <div class="main">
+      <div style="background-color: rgb(132, 88, 175)">
+        <img src="./img/list/2-1.jpg" alt="slide">
+      </div>
+      <div style="background-color: rgb(241, 109, 105)">
+        <img src="./img/list/2-2.jpg" alt="slide">
+      </div>
+      <div style="background-color: rgb(86, 157, 1)">
+        <img src="./img/list/2-3.jpg" alt="slide">
+      </div>
+      <div style="background-color: rgb(195, 52, 48)">
+        <img src="./img/list/2-4.jpg" alt="slide">
+      </div>
+      <div style="background-color: rgb(27, 88, 169)">
+        <img src="./img/list/2-5.jpg" alt="slide">
+      </div>
+    </div>
+    <section>
+      <div class="book">
+        <h3>베스트 셀러</h3>
+        <ul id="bestSeller"></ul>
+      </div>
+      <div class="book">
+        <h3>이 달의 도서</h3>
+        <ul id="itemNewSpecial"></ul>
+      </div>
+    </section>
+  </div>
+  <script src="./js/script.js"></script>
+  <script>
+    /* api */
+    var queryType = ['Bestseller', 'ItemNewSpecial'];
+    var left = 0;
+
+    function responseList(data, queryType) {
+      var items = $(data).find('item');
+      for (var i = 0; i < items.length; i++) {
+        var item = $(items[i]);
+        var title = $(item).find('title').text();
+        var link = $(item).find('link').text();
+        var isbn13 = $(item).find('isbn13').text();
+        var cover = $(item).find('cover').text();
+
+        if (queryType != 'Bestseller' && i == 0) left = 0;
+
+        var list = '<li style="left:' + left + 'px" onclick=ask("' + isbn13 + '")>' +
+          '<div>' +
+          '<img src="' + cover + '" alt="' + title + '">' +
+          '</div>' +
+          '</li>';
+        var type = queryType == 'Bestseller' ? '#bestSeller' : '#itemNewSpecial';
+
+        $(type).append(list);
+        left += $(".book li").width();
+      }
+    } // responseList()
+
+    function requestList(queryType) {
+      var key = 'ttbbrs1051305001';
+      var url = 'http://www.aladin.co.kr/ttb/api/ItemList.aspx';
+      url += '?' + encodeURIComponent('ttbkey') + '=' + encodeURIComponent(key);
+      url += '&' + encodeURIComponent('QueryType') + '=' + encodeURIComponent(queryType);
+      url += '&' + encodeURIComponent('MaxResults') + '=' + encodeURIComponent('10');
+      url += '&' + encodeURIComponent('start') + '=' + encodeURIComponent('1');
+      url += '&' + encodeURIComponent('SearchTarget') + '=' + encodeURIComponent('Book');
+      url += '&' + encodeURIComponent('output') + '=' + encodeURIComponent('xml');
+      url += '&' + encodeURIComponent('Version') + '=' + encodeURIComponent('20131101');
+
+      $.ajax({
+        url: url,
+        success: function (data) {
+          responseList(data, queryType);
+        }
+      });
+    } // requestList()
+
+    for (var i = 0; i < queryType.length; i++) {
+      requestList(queryType[i]);
+    }
+
+    /* img silde */
+    var img = $('.main div');
+    var last = img.length - 1;
+    var ino = 0;
+
+    function slide() {
+      $(img[ino]).siblings('img').css({
+        'left': '100%'
+      });
+
+      $(img[ino]).animate({
+        'left': '-100%'
+      }, 2000, function () {
+        $(this).css({
+          'left': '100%'
+        });
+      });
+
+      ino++;
+      if (ino > last) ino = 0;
+
+      $(img[ino]).animate({
+        'left': 0,
+      }, 2000);
+    }
+
+    setInterval(slide, 2000);
+
+    /* popup */
+    $('#popup > button').on('click', function() {
+      $('#popup').css({'display': 'none'});
+    });
+  </script>
+</body>
+</html>
