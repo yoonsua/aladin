@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="//image.aladin.co.kr/img/home/aladin.ico" type="image/x-icon" rel="shortcut icon">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <title>알라딘</title>
+</head>
+<body>
+  <div id="ask">
+    <header>
+      <a href="index.html"><img id="logo" src="img/logo.gif"></a>
+      <div id="search_box">
+        <input type="text" placeholder="검색" id="title" autocomplete="off">
+        <button>
+          <img id="search_icon" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png">
+        </button>
+      </div>
+    </header>
+    <section>
+      <div class="book-img">
+        <div class="book-main-img">
+        </div>
+      </div>
+      <div class="book-info">
+        <p class="book-title"></p>
+        <p class="book-author"></p>
+      </div>
+      <div class="book-explain">
+        <div class="book-content">
+          <div class="book-subcon">원가</div>
+          <div class="book-price"></div>
+        </div>
+        <div class="book-content">
+          <div class="book-subcon">판매가</div>
+          <div class="book-sale"></div>
+        </div>
+        <div class="book-content">
+          <div class="book-subcon">마일리지</div>
+          <div class="book-mileage"></div>
+        </div>
+      </div>
+      <div class="book-introduce">
+        <h4>책소개</h4>
+        <p></p>
+      </div>
+      <div class="book-shop">
+        <h4>중고매장</h4>
+      </div>
+    </section>
+    <footer>
+      <div class="book-cart">
+        <button class="btn-cart">장바구니</button>
+        <button class="btn-money">구매하기</button>
+      </div>
+    </footer>
+  </div>
+</body>
+<script src="./js/script.js"></script>
+<script>
+  getParameterByName('isbn');
+
+  function getParameterByName(isbn) {
+    var url = window.location.href;
+    isbn = isbn.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + isbn + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    requestList(results[2]);
+    used(results[2]);
+  }
+
+  function requestList(isbn) {
+    var visbn = isbn;
+    var key = 'ttbbrs07041856003';
+    var url = 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx';
+    url += '?' + encodeURIComponent('ttbkey') + '=' + encodeURIComponent(key);
+    url += '&' + encodeURIComponent('itemIdType') + '=' + encodeURIComponent('ISBN13');
+    url += '&' + encodeURIComponent('ItemId') + '=' + encodeURIComponent(visbn);
+    url += '&' + encodeURIComponent('output') + '=' + encodeURIComponent('xml');
+    responseList(url);
+  }
+
+  function responseList(url) {
+    var param = url;
+    var title, link, author, publisher, description, cut, cover, img, priceSales, priceStandard, milleage;
+
+    $.get(param, function (res) {
+      var items = $(res).find('item');
+      for (var i = 0; i < items.length; i++) {
+        title = $(items[i]).find('title').text();
+        link = $(items[i]).find('link').text();
+        author = $(items[i]).find('authors > author:first-child()').text();
+        publisher = $(items[i]).find('publisher').text();
+        description = $(items[i]).find('description').text();
+        cut = description.split('>');
+        cover = $(items[i]).find('cover').text();
+        priceSales = parseInt($(items[i]).find('priceSales').text());
+        priceStandard = parseInt($(items[i]).find('priceStandard').text());
+        mileage = parseInt($(items[i]).find('mileage').text());
+        img = "<img src=" + cover + ">";
+      }
+      
+        priceSales = (Number(priceSales).toLocaleString('en'));
+        priceStandard = (Number(priceStandard).toLocaleString('en'));
+        mileage = (Number(mileage).toLocaleString('en'));
+        
+        $('.book-main-img').append(img);
+        $('.book-title').append('<h3>' + title + '<h3>');
+        $('.book-author').append(author + " (지은이) " + publisher);
+        $('.book-price').append(priceStandard + '원');
+        $('.book-sale').append(priceSales + '원');
+        $('.book-mileage').append(mileage + '원');
+        $('.book-introduce > p').append(cut[2]);
+        
+      });
+    }
+
+  function used(isbn) {
+    var isbn13 = isbn ? isbn : true;
+    var ServiceKey = "ttbkkn202841906001";
+    var url = 'http://www.aladin.co.kr/ttb/api/ItemOffStoreList.aspx'; /*URL*/
+    url += '?' + encodeURIComponent('ttbkey') + '=' + encodeURIComponent(ServiceKey);
+    url += '&' + encodeURIComponent('itemIdType') + '=' + encodeURIComponent('ISBN13');
+    url += '&' + encodeURIComponent('ItemId') + '=' + encodeURIComponent(isbn13);
+
+    showInfo(url);
+  }
+
+  function showInfo(url) {
+    var info = url;
+
+    $.get(info, function (res) {
+      var items = $(res).find("offStoreInfo");
+
+      for (let i = 0; i < items.length; i++) {
+        var offName = $(items[i]).find('offName').text();
+        var link = $(items[i]).find('link').text();
+        var view = "<p><a href=" + link + ">" + offName + "</a></p>";
+
+        $('.book-shop').append(view);
+      }
+    });
+  }
+</script>
+</html>
